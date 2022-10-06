@@ -1,16 +1,21 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-const Task = (props) => {
+interface Props {
+  taskName: string
+}
+
+export default function Task({taskName}: Props) {
   return (
     <View style={styles.item}>
       <View style={styles.itemLeft}>
         <View style={styles.square}></View>
-        <Text style={styles.itemText}>{props.text}</Text>
+        <Text style={styles.itemText}>{taskName}</Text>
       </View>
       <View style={styles.circular}></View>
     </View>
   )
+  
 }
 
 const styles = StyleSheet.create(
@@ -49,5 +54,3 @@ const styles = StyleSheet.create(
     },
   }
 );
-
-export default Task;

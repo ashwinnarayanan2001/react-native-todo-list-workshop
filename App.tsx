@@ -1,21 +1,20 @@
 import React, {useState} from 'react';
-import { KeyboardAvoidingView, StyleSheet, Text, View, TextInput, TouchableOpacity, Platform } from 'react-native';
-import Task from './components/Task';
+import { KeyboardAvoidingView, StyleSheet, Text, View, TextInput, TouchableOpacity, Platform, Image } from 'react-native';
+import Task from './components/Task/Task';
 
 export default function App() {
   // Task keeps track of the current task being entered in the text input
-  const [task, setTask] = useState();
-  const [taskItems, setTaskItems] = useState([]);
+  const [task, setTask] = useState<string>('');
+  const [taskItems, setTaskItems] = useState<string[]>([]);
 
   // Adds task into taskItems, and sets input field empty
   const handleAddTask = () => {
-    // Keyboard.dismiss();
     setTaskItems([...taskItems, task])
-    setTask(null);
+    setTask('');
   }
 
   // Removes the task by its index from the taskItems
-  const completeTask = (index) => {
+  const completeTask = (index: number) => {
     let itemsCopy = [...taskItems];
     // Remove 1 item from array
     itemsCopy.splice(index, 1);
@@ -32,7 +31,7 @@ export default function App() {
               return (
                 // Displays each task, and deletes a task from the taskItems if selected
                 <TouchableOpacity key={index} onPress={() => completeTask(index)}>
-                  <Task text = {item} />
+                  <Task taskName={item} />
                 </TouchableOpacity>
               )
             })
@@ -49,7 +48,7 @@ export default function App() {
         <TextInput style={styles.input} placeholder={'Write a task'} value={task} onChangeText={text => setTask(text)}/>
         <TouchableOpacity onPress={ () => handleAddTask()}>
           <View style={styles.addWrapper}>
-            <Text style={styles.addText}>+</Text>
+            <Image source={require('./assets/add.png')} style={styles.add}></Image>
           </View>
         </TouchableOpacity>
       </KeyboardAvoidingView>
@@ -100,4 +99,8 @@ const styles = StyleSheet.create({
     borderColor: '#C0C0C0',
     borderWidth: 1,
   },
+  add: {
+    width: 20,
+    height: 20,
+  }
 });
